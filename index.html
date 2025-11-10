@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Aluguel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🏠 Simulador de Aluguel</h1>
+    <p class="subtitle">Calcule o valor estimado do seu aluguel</p>
+
+    <form method="POST">
+      <label for="tipo">Tipo de imóvel</label>
+      <select id="tipo" name="tipo" required>
+        <option value="apartamento">Apartamento</option>
+        <option value="casa">Casa</option>
+        <option value="estudio">Estúdio</option>
+      </select>
+
+      <label for="quartos">Quantidade de quartos</label>
+      <input type="number" id="quartos" name="quartos" min="1" max="5" value="1" required>
+
+      <label><input type="checkbox" name="garagem"> Possui garagem</label>
+
+      <label for="vagas_extra">Vagas extras (somente estúdio)</label>
+      <input type="number" id="vagas_extra" name="vagas_extra" min="0" value="0" disabled>
+
+      <label><input type="checkbox" name="sem_criancas"> Sem crianças</label>
+
+      <button type="submit">Calcular Aluguel</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tipoSelect = document.getElementById("tipo");
+      const vagasInput = document.getElementById("vagas_extra");
+
+      function atualizarCampoVagas() {
+        if (tipoSelect.value === "estudio") {
+          vagasInput.disabled = false;
+        } else {
+          vagasInput.disabled = true;
+          vagasInput.value = 0;
+        }
+      }
+
+      tipoSelect.addEventListener("change", atualizarCampoVagas);
+      atualizarCampoVagas(); // garante o estado certo ao carregar a página
+    });
+  </script>
+</body>
+</html>
